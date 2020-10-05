@@ -1,9 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
 // Configura o app para entender requisições com tipo de corpo JSON
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:3000" }));
 
 const projectRouter = require("./routes/project.routes");
 
