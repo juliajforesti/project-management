@@ -4,6 +4,7 @@ const ProjectSchema = new Schema(
   {
     title: String,
     description: String,
+    tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
   },
   { timestamps: true }
 );
