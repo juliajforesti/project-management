@@ -6,6 +6,8 @@ const { ObjectId } = require("mongoose").Types;
 const Task = require("../models/Task.model");
 const Project = require("../models/Project.model");
 
+const uploader = require("../configs/cloudinary.config");
+
 // REST
 
 // REpresentational State Transfer
@@ -45,6 +47,16 @@ router.get(
   }
 );
 
+// POST => Upload de imagem para o Cloudinary
+router.post("/attachment-upload", uploader.single("attachment"), (req, res) => {
+  // Caso o upload nāo tenha sido feito, retorne uma mensagem de erro
+  if (!req.file) {
+    return res.status(500).json({ message: "No file uploaded!" });
+  }
+
+  return res.status(200).json({ attachmentUrl: req.file.secure_url });
+});
+
 // POST => Enviar dados (Crud) CREATE
 // A JSON API especifica que o valor de resposta de requisições do tipo POST deve ser a entidade criada, e o Status HTTP deve ser 201 CREATED
 router.post(
@@ -52,7 +64,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      console.log(req.body);
+      console.log("TASK BODY =>", req.body);
 
       const resultTask = await Task.create(req.body);
 
