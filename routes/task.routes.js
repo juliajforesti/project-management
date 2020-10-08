@@ -66,6 +66,7 @@ router.post(
       console.log(resultTask);
       return res.status(201).json({ created: { resultTask, resultProj } });
     } catch (err) {
+      console.error(err);
       return res.status(500).json({ error: err });
     }
   }
