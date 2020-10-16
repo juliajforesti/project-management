@@ -30,7 +30,11 @@ app.use("/api", authRouter);
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use((req, res, next)=> {
-  res.sendFile(__dirname + '/public/index.html')
+  const hostURL = req.get('host')
+  console.log(hostURL)
+  if (hostURL.includes('/api')){
+    return res.sendFile(__dirname + '/public/index.html')
+  }
 })
 
 
