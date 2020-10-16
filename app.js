@@ -12,7 +12,7 @@ const app = express();
 // Configura o app para entender requisições com tipo de corpo JSON
 app.use(express.json());
 app.use(cors({ origin: process.env.CORS }));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const projectRouter = require("./routes/project.routes");
@@ -29,11 +29,10 @@ app.use("/api", authRouter);
 
 
 app.use(express.static(path.join(__dirname, '/public')));
-app.use((req, res, next) => { 
-  const hostUrl = req.get("host") 
-  if (hostUrl.includes("/api") === true) {  
-    return res.sendFile(__dirname + "/public/index.html"); 
-  }return
-});
+app.use((req, res, next)=> {
+  res.sendFile(__dirname + '/public/index.html')
+})
+
+
 
 app.listen(process.env.PORT, () => console.log(`running at port ${process.env.PORT}`));
