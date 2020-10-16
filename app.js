@@ -7,7 +7,7 @@ const app = express();
 
 // Configura o app para entender requisições com tipo de corpo JSON
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: process.env.CORS }));
 
 const projectRouter = require("./routes/project.routes");
 const taskRouter = require("./routes/task.routes");
@@ -20,5 +20,11 @@ require("./configs/passport.config")(app);
 app.use("/api", projectRouter);
 app.use("/api", taskRouter);
 app.use("/api", authRouter);
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next)=> {
+  res.sendFile(__dirname + '/public/index.html')
+ })
+ 
 
 app.listen(4000, () => console.log("running at port 4000"));
