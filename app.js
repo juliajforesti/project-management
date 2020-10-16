@@ -27,4 +27,4 @@ app.use((req, res, next)=> {
  })
  
 
-app.listen(4000, () => console.log("running at port 4000"));
+app.listen(process.env.PORT, () => console.log(`running at port ${process.env.PORT}`));
