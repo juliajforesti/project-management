@@ -24,6 +24,7 @@ app.use("/api", projectRouter);
 app.use("/api", taskRouter);
 app.use("/api", authRouter);
 
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next)=> {
   res.sendFile(__dirname + '/public/index.html')
