@@ -55,10 +55,10 @@ router.post("/signup", async (req, res) => {
       email,
       passwordHash: hashedPassword,
     });
-    console.log('result from user create:', result)
+
     // Retorna objeto de usuario criado
     res.status(201).json({ user: result });
-
+    console.log(result);
   } catch (err) {
     console.error(err);
     // Mensagem de erro para exibir erros de validacao do Schema do Mongoose
